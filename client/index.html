@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pohon Mangga</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+  </head>
+  <body>
+    <div class="" id="app">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img v-if="pohon.status == false" style="max-height: 200px" src="http://images.clipartpanda.com/simple-bare-tree-clipart-bare-tree-with-love-birds.svg" alt="pohon" class="img-thumbnail">
+            <img v-else-if="pohon.umur > 5" style="max-height: 200px" src="http://images.clipartpanda.com/clipart-tree-mango_tree.png" alt="pohon" class="img-thumbnail">
+            <img v-else style="max-height: 200px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFFd34L7nqU-Vh0Szjk-9-AACAEyz4ecW7__bENFJ9P0kRqxgOdg" alt="pohon" class="img-thumbnail">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Tinggi</th>
+                  <th>Umur</th>
+                  <th>Status</th>
+                  <th>Harvested</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{pohon.tinggi}}</td>
+                  <td>{{pohon.umur}}</td>
+                  <td v-if="pohon.status">Sehat</td>
+                  <td v-else>Mati</td>
+                  <td>{{pohon.harvested}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    var config = {
+      databaseURL: "https://i-fox-kanban.firebaseio.com",
+      projectId: "i-fox-kanban"
+    }
+
+    firebase.initializeApp(config)
+    var db = firebase.database()
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'ini pohon mangga'
+      },
+      firebase: function() {
+        return {
+          pohon: {
+            source: db.ref('manggo-tree'),
+            // optionally bind as an object
+            asObject: true
+          }
+        }
+      }
+    })
+    </script>
+  </body>
+</html>
